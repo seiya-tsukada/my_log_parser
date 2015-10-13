@@ -17,13 +17,13 @@ def create_csv_file():
 
       for line in f:
         target_str = None
-        target_str = generate_kv_file(line)
+        target_str = generate_kv_recode(line)
 
         tf.write(target_str + "\n")
 
   return tf.name
 
-def generate_kv_file(line):
+def generate_kv_recode(line):
   arr_line = line.split("\t")
 
   for i in arr_line:
@@ -76,7 +76,10 @@ def reqmicsec_ave(csv_file):
 
 if __name__ == "__main__":
   csv_file = create_csv_file()
+
   reqmicsec_ave(csv_file)
+
+  print csv_file
   os.remove(csv_file)
 
   exit(0)
