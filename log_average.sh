@@ -11,10 +11,12 @@ cmd="grep \"status_code:200\" ${1} | awk -F \"\t\" 'match(\$1, /.*\[(.*)\+0900/,
 
 eval ${cmd} > ${tmpfile}
 
+date_tmpfile=`mktemp`
 cmd="cat ${tmpfile} | awk '{print \$1}' | uniq"
-times=`eval ${cmd}`
 
-for i in ${times}
+eval ${cmd} > ${date_tmpfile}
+
+while read i in ${times}
 do
   num=`grep ${i} ${tmpfile} -c`
   reqsec=`grep ${i} ${tmpfile} | awk '{print \$2}'`
@@ -29,6 +31,7 @@ do
   reqsec_ave=`expr ${reqsec_sum} / ${num}`
 
   echo "${i} ${reqsec_ave}"
-done
+done < ${date_tmpfile}
 
 rm -f ${tmpfile}
+rm -f ${date_tmpfile}
