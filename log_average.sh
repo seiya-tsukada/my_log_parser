@@ -16,7 +16,7 @@ cmd="cat ${tmpfile} | awk '{print \$1}' | uniq"
 
 eval ${cmd} > ${date_tmpfile}
 
-while read i in ${times}
+while read i
 do
   num=`grep ${i} ${tmpfile} -c`
   reqsec=`grep ${i} ${tmpfile} | awk '{print \$2}'`
